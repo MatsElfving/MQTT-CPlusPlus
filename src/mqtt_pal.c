@@ -409,10 +409,10 @@ ssize_t mqtt_pal_sendall(mqtt_pal_socket_handle fd, const void* buf, size_t len,
 }
 
 ssize_t mqtt_pal_recvall(mqtt_pal_socket_handle fd, void* buf, size_t bufsz, int flags) {
-    const char *const start = buf;
+    const char *const start = (const char*)buf;
     ssize_t rv;
     do {
-        rv = recv(fd, buf, bufsz, flags);
+        rv = recv(fd, (char*)buf, bufsz, flags);
         if (rv > 0) {
             /* successfully read bytes from the socket */
             buf = (char*)buf + rv;
