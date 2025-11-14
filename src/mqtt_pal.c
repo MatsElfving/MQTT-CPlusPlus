@@ -48,7 +48,7 @@ int _mqtt_pal_dummy;
 #include <mbedtls/ssl.h>
 
 ssize_t mqtt_pal_sendall(mqtt_pal_socket_handle fd, const void* buf, size_t len, int flags) {
-    enum MQTTErrors error = 0;
+    enum MQTTErrors error = MQTT_OK;
     size_t sent = 0;
     while(sent < len) {
         int rv = mbedtls_ssl_write(fd, (const unsigned char*)buf + sent, len - sent);
@@ -84,7 +84,7 @@ ssize_t mqtt_pal_sendall(mqtt_pal_socket_handle fd, const void* buf, size_t len,
 
 ssize_t mqtt_pal_recvall(mqtt_pal_socket_handle fd, void* buf, size_t bufsz, int flags) {
     const void *const start = buf;
-    enum MQTTErrors error = 0;
+    enum MQTTErrors error = MQTT_OK;
     int rv;
     do {
         rv = mbedtls_ssl_read(fd, (unsigned char*)buf, bufsz);
@@ -334,7 +334,7 @@ ssize_t mqtt_pal_recvall(mqtt_pal_socket_handle fd, void* buf, size_t bufsz, int
 #include <errno.h>
 
 ssize_t mqtt_pal_sendall(mqtt_pal_socket_handle fd, const void* buf, size_t len, int flags) {
-    enum MQTTErrors error = 0;
+    enum MQTTErrors error = MQTT_OK;
     size_t sent = 0;
     while(sent < len) {
         ssize_t rv = send(fd, (const char*)buf + sent, len - sent, flags);
@@ -361,7 +361,7 @@ ssize_t mqtt_pal_sendall(mqtt_pal_socket_handle fd, const void* buf, size_t len,
 
 ssize_t mqtt_pal_recvall(mqtt_pal_socket_handle fd, void* buf, size_t bufsz, int flags) {
     const void *const start = buf;
-    enum MQTTErrors error = 0;
+    enum MQTTErrors error = MQTT_OK;
     ssize_t rv;
     do {
         rv = recv(fd, buf, bufsz, flags);
